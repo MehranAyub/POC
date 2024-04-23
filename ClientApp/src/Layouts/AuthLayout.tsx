@@ -45,18 +45,16 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 }));
 
 export const AuthLayout: React.FunctionComponent<AuthLayoutProps> = () => {
-  const token = useSelector((state: AppState) => state.authReducer.token);
+  const isLoggedIn = useSelector(
+    (state: AppState) => state.authReducer.isLoggedIn
+  );
   const [open, setOpen] = React.useState(true);
   let navigate = useNavigate();
   React.useEffect(() => {
-    if (!token) {
-      navigate("/login");
+    if (!isLoggedIn) {
+      navigate("/Login");
     }
-  }, [token]);
-
-  //   if (!isTokenValid(targetWebAccessToken ?? "", dispatch)) {
-  //     navigate("/login");
-  //   }
+  }, [isLoggedIn]);
 
   return (
     <>
@@ -74,6 +72,7 @@ export const AuthLayout: React.FunctionComponent<AuthLayoutProps> = () => {
             path={"/UnapprovedTimeCards"}
             element={<UnapprovedTimeCard />}
           ></Route>
+          <Route path={"/"} element={<HomePage />}></Route>
         </Routes>
       </Main>
     </>

@@ -7,17 +7,20 @@ import { AppState } from "../Redux/Reducer/rootReducer.tsx";
 import { useSelector } from "react-redux";
 
 export const MasterLayout: React.FunctionComponent = () => {
-  const token = useSelector((state: AppState) => state.authReducer.token);
+  const isLoggedIn = useSelector(
+    (state: AppState) => state.authReducer.isLoggedIn
+  );
 
   return (
     <>
-      {token ? (
+      {isLoggedIn ? (
         <Box sx={{ display: "flex", flexGrow: 1 }}>
           <AuthLayout></AuthLayout>{" "}
         </Box>
       ) : (
         <Routes>
           <Route path={"/Login"} element={<Login />}></Route>
+          <Route path="/" element={<Navigate to={"/Login"}></Navigate>} />
         </Routes>
       )}
     </>

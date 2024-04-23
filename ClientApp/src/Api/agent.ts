@@ -5,11 +5,10 @@ export const baseURL = "https://localhost:7148/";
 axios.defaults.baseURL = baseURL;
 
 let token: string | undefined = undefined;
-
 export const agentListener = () => {};
 
 axios.interceptors.request.use((config) => {
-  //   if (token) config.headers.Authorization = `Bearer ${token}`;
+  // if (token) config?.headers?.Authorization = `Bearer ${token}`;
   return config;
 });
 

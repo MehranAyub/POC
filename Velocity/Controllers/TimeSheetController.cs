@@ -7,10 +7,12 @@ using Microsoft.Data.SqlClient.Server;
 using static System.Net.Mime.MediaTypeNames;
 using Microsoft.AspNetCore.Http;
 using System.Net;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Velocity.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class TimeSheetController : ControllerBase
     {

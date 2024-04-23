@@ -14,6 +14,10 @@ import { Box } from "@mui/material";
 import SettingsIcon from "@mui/icons-material/Settings";
 import LogoutIcon from "@mui/icons-material/Logout";
 import StoreIcon from "@mui/icons-material/Store";
+import { Dispatch } from "@reduxjs/toolkit";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../Services/Auth/auth.ts";
+import { AppState } from "../Redux/Reducer/rootReducer.tsx";
 export interface AppTopbarProps {
   setOpen: any;
   open: any;
@@ -46,6 +50,10 @@ export const AppTopbar: React.FunctionComponent<AppTopbarProps> = ({
   setOpen,
   open,
 }) => {
+  const name = useSelector(
+    (state: AppState) => state.authReducer.userData?.name
+  );
+  const dispatch = useDispatch<Dispatch<any>>();
   let navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -61,6 +69,10 @@ export const AppTopbar: React.FunctionComponent<AppTopbarProps> = ({
 
   const Logout = () => {
     setAnchorEl(null);
+    dispatch(logout());
+    setTimeout(() => {
+      window.location.href = "/Login";
+    }, 1000);
   };
 
   return (
@@ -90,7 +102,7 @@ export const AppTopbar: React.FunctionComponent<AppTopbarProps> = ({
               alignItems="center"
             >
               <Typography style={{ color: "#38376e" }} fontWeight={"bold"}>
-                Hi Logged User
+                Hi {name ?? ""}
               </Typography>
 
               <IconButton
