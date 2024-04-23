@@ -1,6 +1,7 @@
 ﻿using Core.Application.TimeSheets;
 using Core.Application.Users;
 using Core.Data;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,15 +10,17 @@ using System.Threading.Tasks;
 
 namespace Core.Application
 {
-    public class RepositoryWrapper: IRepositoryWrapper
+    public class RepositoryWrapper : IRepositoryWrapper
     {
         private RepositoryContext _repositoryContext;
         private IUserRepository _userRepository;
         private ITimeSheetRepository _timeSheetRepository;
+        private IConfiguration _configuration;
 
-        public RepositoryWrapper(RepositoryContext repositoryContext)
+        public RepositoryWrapper(RepositoryContext repositoryContext, IConfiguration configuration)
         {
             _repositoryContext = repositoryContext;
+            _configuration = configuration;
         }
         public IUserRepository User
         {
@@ -25,7 +28,7 @@ namespace Core.Application
             {
                 if (_userRepository == null)
                 {
-                    _userRepository = new UserRepository(_repositoryContext);
+                    _userRepository = new UserRepository(_repositoryContext, _configuration);
                 }
                 return _userRepository;
             }

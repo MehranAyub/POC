@@ -11,7 +11,7 @@ namespace Core.Application.Users.UserDtos
     {
        public User? UserData { get; set; }
        public bool IsValid { get; set; }
-       public string? token { get; set; }
+       public string? Token { get; set; }
     }
 
     public class UserValidationRequest

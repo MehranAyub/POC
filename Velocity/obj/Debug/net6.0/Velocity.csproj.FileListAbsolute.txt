@@ -139,3 +139,4 @@ D:\Velocity\POC\Velocity\obj\Debug\net6.0\Velocity.pdb
 D:\Velocity\POC\Velocity\obj\Debug\net6.0\Velocity.genruntimeconfig.cache
 D:\Velocity\POC\Velocity\obj\Debug\net6.0\ref\Velocity.dll
 D:\Velocity\POC\Velocity\obj\Debug\net6.0\Velocity.sourcelink.json
+D:\Velocity\POC\Velocity\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

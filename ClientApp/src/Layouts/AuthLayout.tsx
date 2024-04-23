@@ -5,10 +5,10 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import { AppTopbar } from "../Components/AppTopbar.tsx";
 import { AppLeftMenu } from "./AppLeftMenu.tsx";
 import HomePage from "../Pages/HomePage.tsx";
-import ClientTimeCard from "../Pages/ClientTimeCard.tsx";
+import { ClientTimeCard } from "../Pages/ClientTimeCard.tsx";
 import { useSelector } from "react-redux";
 import { AppState } from "../Redux/Reducer/rootReducer.tsx";
-import UnapprovedTimeCard from "../Pages/UnapprovedTimeCard.tsx";
+import { UnapprovedTimeCard } from "../Pages/UnapprovedTimeCard.tsx";
 
 export interface AuthLayoutProps {}
 

@@ -364,3 +364,10 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+Core.Application/bin/Debug/net6.0/Core.Application.dll
+Core.Application/bin/Debug/net6.0/Core.Application.dll
+Core.Application/bin/Debug/net6.0/Core.Application.dll
+Core.Application/bin/Debug/net6.0/Core.Application.pdb
+/Velocity/bin/Debug/net6.0/Microsoft.IdentityModel.JsonWebTokens.dll
+/Velocity/bin/Debug/net6.0/Core.Application.pdb
+/Velocity/bin/Debug/net6.0/Core.Application.dll
