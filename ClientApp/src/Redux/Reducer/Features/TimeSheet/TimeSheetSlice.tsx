@@ -36,6 +36,13 @@ export const TimeSheetApi = createApi({
         data: null,
       }),
     }),
+    approveTimesheet: build.mutation<any, { id: number }>({
+      query: ({ id }) => ({
+        url: `api/TimeSheet/` + id,
+        method: "put",
+        data: null,
+      }),
+    }),
   }),
 });
 
@@ -45,5 +52,6 @@ export const {
   useGetProjectsQuery,
   useAddTimesheetMutation,
   useDeleteTimesheetMutation,
+  useApproveTimesheetMutation,
 } = TimeSheetApi;
 export const TimeSheetReducer = TimeSheetApi.reducer;

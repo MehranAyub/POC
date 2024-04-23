@@ -1,37 +1,13 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
-  useAddTimesheetMutation,
-  useGetEmployeesQuery,
-  useGetProjectsQuery,
-} from "../Redux/Reducer/Features/TimeSheet/TimeSheetSlice.tsx";
-import {
-  Alert,
-  Autocomplete,
   Box,
-  Button,
-  Container,
-  FormControl,
-  FormControlLabel,
-  FormLabel,
   Grid,
   ListItemText,
   MenuItem,
-  Radio,
-  RadioGroup,
   Select,
-  TextField,
   Typography,
 } from "@mui/material";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { ErrorMessage, Form, Formik, FormikProps } from "formik";
-import {
-  TimeSheetInitialValues,
-  TimeSheetValidationSchema,
-  Timesheet,
-} from "../Models/Timesheet.ts";
-import dayjs from "dayjs";
+import { Timesheet } from "../Models/Timesheet.ts";
 interface ViewCardProps {
   timeSheet: Timesheet;
 }
@@ -39,15 +15,16 @@ export const ViewClientTimeCard: React.FunctionComponent<ViewCardProps> = ({
   timeSheet,
 }) => {
   const [pdfUrl, setPdfUrl] = useState<string>("");
-  const [selectedFile, setSelectedFile] = useState<any>();
-  const [isVerified, setIsVerified] = React.useState(false);
-
-  const handleFileChange = (file: any) => {
-    setSelectedFile(file);
-    const fileUrl = URL.createObjectURL(file);
-    setPdfUrl(fileUrl);
+  const [selectedFile, setSelectedFile] = useState<string>("");
+  const handleFileChange = (url: string) => {
+    setSelectedFile(url);
+    setPdfUrl(url);
   };
 
+  useEffect(() => {
+    setSelectedFile(timeSheet.urls ? timeSheet.urls[0] : "");
+    setPdfUrl(timeSheet.urls ? timeSheet.urls[0] : "");
+  }, []);
   return (
     <>
       <Grid
@@ -55,25 +32,49 @@ export const ViewClientTimeCard: React.FunctionComponent<ViewCardProps> = ({
         container
         spacing={2}
       >
-        <Grid sx={{ textAlign: "end" }} item md={2}>
-          Uploaded By
+        <Grid item md={4}>
+          Employee Name/Email/ID:
         </Grid>
-        <Grid item md={3}>
-          {timeSheet.user?.name}
+        <Grid item md={8}>
+          {timeSheet.user?.name} /{timeSheet.user?.email}/{" "}
+          {timeSheet.user?.userId}
         </Grid>
-        <Grid sx={{ textAlign: "end" }} item md={2}>
-          Add Timesheets
+        <Grid item md={4}>
+          From Date:
         </Grid>
-        <Grid item md={3}></Grid>
-        <Grid item md={2}>
-          <Button size="small" variant="contained">
-            Upload
-          </Button>
+        <Grid item md={8}>
+          {timeSheet.fromDate.toString().split("T")[0]}
         </Grid>
-        <Grid mt={2} sx={{ textAlign: "end" }} item md={2}>
-          List of Time Sheets to Process
+        <Grid item md={4}>
+          To Date:
         </Grid>
-        <Grid mt={2} item md={3}></Grid>
+        <Grid item md={8}>
+          {timeSheet.toDate.toString().split("T")[0]}
+        </Grid>
+        <Grid item md={4}>
+          Processed TimeSheets:
+        </Grid>
+        <Grid mt={2} item md={8}>
+          <Select
+            labelId="demo-multiple-checkbox-label"
+            id="demo-multiple-checkbox"
+            size="small"
+            fullWidth
+            value={selectedFile}
+            onChange={(e) => handleFileChange(e.target.value)}
+          >
+            {timeSheet.urls && timeSheet.urls.length > 0 ? (
+              timeSheet.urls.map((url, index: number) => (
+                <MenuItem key={index} value={url}>
+                  <ListItemText primary={url} />
+                </MenuItem>
+              ))
+            ) : (
+              <MenuItem disabled>No TimeSheet uploaded</MenuItem>
+            )}
+          </Select>
+        </Grid>
+
         <Grid item md={12}>
           <Box
             sx={{
@@ -81,14 +82,15 @@ export const ViewClientTimeCard: React.FunctionComponent<ViewCardProps> = ({
               border: "1px solid #bfbfbf",
               mt: 5,
               p: 2,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
+              textAlign: "center",
             }}
           >
             <Typography>Preview of Scanned Copy</Typography>
           </Box>
-          <iframe src={pdfUrl} style={{ width: "100%", height: "70vh" }} />
+          <iframe
+            src={"https://localhost:7148/Assets/" + pdfUrl}
+            style={{ width: "100%", height: "70vh" }}
+          />
         </Grid>
       </Grid>
     </>

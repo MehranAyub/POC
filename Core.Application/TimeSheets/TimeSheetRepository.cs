@@ -112,5 +112,15 @@ namespace Core.Application.TimeSheets
             }
             return false;
         }
+        public async Task<bool> ApproveTimeSheet(int id)
+        {
+            var timeSheet = await _repositoryContext.TimeSheets.FirstOrDefaultAsync(n => n.Id == id);
+            if (timeSheet != null)
+            {
+                timeSheet.IsApproved = true;
+                return true;
+            }
+            return false;
+        }
     }
 }

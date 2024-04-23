@@ -10,7 +10,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { AccountCircle } from "@mui/icons-material";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
-import { Box } from "@mui/material";
+import { Box, TextField } from "@mui/material";
 import SettingsIcon from "@mui/icons-material/Settings";
 import LogoutIcon from "@mui/icons-material/Logout";
 import StoreIcon from "@mui/icons-material/Store";
@@ -90,61 +90,68 @@ export const AppTopbar: React.FunctionComponent<AppTopbarProps> = ({
               <MenuIcon />
             </IconButton>
           )}
-
-          <Typography noWrap component="div" sx={{ flexGrow: 1, mt: 2 }}>
-            <img style={{ maxWidth: 67 }} src={Logo}></img>
-          </Typography>
-          <div>
-            <Box
-              display="flex"
-              justifyContent="flex-end"
-              flexDirection="row"
-              alignItems="center"
-            >
-              <Typography style={{ color: "#38376e" }} fontWeight={"bold"}>
-                Hi {name ?? ""}
-              </Typography>
-
-              <IconButton
-                size="large"
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleMenu}
-                style={{ color: "#38376e" }}
-              >
-                <AccountCircle />
-              </IconButton>
+          <Box
+            sx={{
+              width: "100%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            <Typography noWrap component="div" sx={{ mt: 2 }}>
+              <img style={{ maxWidth: 67 }} src={Logo}></img>
+            </Typography>
+            <Box alignSelf="center">
+              <TextField size="small" label="search" name="search"></TextField>
             </Box>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorEl}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorEl)}
-              onClose={handleClose}
-            >
-              <MenuItem
-                component={Link}
-                to={"/Customer/Profile"}
-                onClick={handleClose}
-                sx={{ fontSize: "14px" }}
+            <div>
+              <Box
+                display="flex"
+                justifyContent="flex-end"
+                flexDirection="row"
+                alignItems="center"
               >
-                <AccountCircle fontSize="small" sx={{ marginRight: 1 }} />{" "}
-                Profile
-              </MenuItem>
-              <MenuItem onClick={Logout} sx={{ fontSize: "14px" }}>
-                <LogoutIcon sx={{ marginRight: 1 }} fontSize="small" /> Log Out
-              </MenuItem>
-            </Menu>
-          </div>
+                <Typography style={{ color: "#38376e" }} fontWeight={"bold"}>
+                  Hi {name ?? ""}
+                </Typography>
+
+                <IconButton
+                  size="large"
+                  aria-label="account of current user"
+                  aria-controls="menu-appbar"
+                  aria-haspopup="true"
+                  onClick={handleMenu}
+                  style={{ color: "#38376e" }}
+                >
+                  <AccountCircle />
+                </IconButton>
+              </Box>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "right",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+              >
+                <MenuItem onClick={handleClose} sx={{ fontSize: "14px" }}>
+                  <AccountCircle fontSize="small" sx={{ marginRight: 1 }} />{" "}
+                  Profile
+                </MenuItem>
+                <MenuItem onClick={Logout} sx={{ fontSize: "14px" }}>
+                  <LogoutIcon sx={{ marginRight: 1 }} fontSize="small" /> Log
+                  Out
+                </MenuItem>
+              </Menu>
+            </div>
+          </Box>
         </Toolbar>
       </AppBar>
     </>

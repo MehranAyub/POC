@@ -65,7 +65,7 @@ namespace Velocity.Controllers
             }
         }
         [HttpDelete("{id}")]
-        public async Task<PayloadCustom<TimeSheet>> DeleteTimeSheet(int id)
+        public async Task<PayloadCustom<string>> DeleteTimeSheet(int id)
         {
             try
             {
@@ -73,13 +73,13 @@ namespace Velocity.Controllers
                 if (result)
                 {
                     _repository.Save();
-                    return new PayloadCustom<TimeSheet>
+                    return new PayloadCustom<string>
                     {
                         Status = (int)HttpStatusCode.OK,
                         Message = "Deleted Successfully"
                     };
                 }
-                return new PayloadCustom<TimeSheet>
+                return new PayloadCustom<string>
                 {
                     Status = (int)HttpStatusCode.NotFound,
                     Message = "Entity Not Found"
@@ -88,8 +88,37 @@ namespace Velocity.Controllers
             }
             catch (Exception ex)
             {
-                return new PayloadCustom<TimeSheet> { Status = (int)HttpStatusCode.InternalServerError,Message="Found Exception"+ex.InnerException };
+                return new PayloadCustom<string> { Status = (int)HttpStatusCode.InternalServerError,Message="Found Exception"+ex.InnerException };
             }
         }
+        [HttpPut("{id}")]
+        public async Task<PayloadCustom<string>> ApproveTimeSheet(int id)
+        {
+            try
+            {
+                var result = await _repository.TimeSheet.ApproveTimeSheet(id);
+                if (result)
+                {
+                    _repository.Save();
+                    return new PayloadCustom<string>
+                    {
+                        Status = (int)HttpStatusCode.OK,
+                        Message = "Approved Successfully"
+                    };
+                }
+                return new PayloadCustom<string>
+                {
+                    Status = (int)HttpStatusCode.NotFound,
+                    Message = "Entity Not Found"
+                };
+
+            }
+            catch (Exception ex)
+            {
+                return new PayloadCustom<string> { Status = (int)HttpStatusCode.InternalServerError, Message = "Found Exception" + ex.InnerException };
+            }
+        }
+
+
     }
 }

@@ -16,11 +16,9 @@ import {
   ListItemText,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import PrecisionManufacturingIcon from "@mui/icons-material/PrecisionManufacturing";
-import CategoryIcon from "@mui/icons-material/Category";
+import PunchClockIcon from "@mui/icons-material/PunchClock";
 import Inventory2Icon from "@mui/icons-material/Inventory2";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import SettingsIcon from "@mui/icons-material/Settings";
+import HomeIcon from "@mui/icons-material/Home";
 export interface AppLeftMenuProps {
   setOpen: any;
   open: any;
@@ -103,7 +101,7 @@ export const AppLeftMenu: React.FunctionComponent<AppLeftMenuProps> = ({
               }}
             >
               <ListItemIcon>
-                <InboxIcon sx={{ color: "#ffff" }} />
+                <HomeIcon sx={{ color: "#ffff" }} />
               </ListItemIcon>
               <ListItemText primary={"Home"} />
             </ListItemButton>
@@ -111,26 +109,26 @@ export const AppLeftMenu: React.FunctionComponent<AppLeftMenuProps> = ({
           <ListItem disablePadding>
             <ListItemButton
               onClick={() => {
-                navigate("/ManageTimeCards");
+                navigate("/AddTimeCard");
               }}
             >
               <ListItemIcon>
                 <Inventory2Icon sx={{ color: "#ffff" }} />
               </ListItemIcon>
-              <ListItemText primary={"Time Cards"} />
+              <ListItemText primary={"Add Time Card"} />
             </ListItemButton>
           </ListItem>
 
           <ListItem disablePadding>
             <ListItemButton
               onClick={() => {
-                navigate("/UnapprovedTimeCards");
+                navigate("/TimeCards");
               }}
             >
               <ListItemIcon>
-                <SettingsIcon sx={{ color: "#ffff" }} />
+                <PunchClockIcon sx={{ color: "#ffff" }} />
               </ListItemIcon>
-              <ListItemText primary={"Unapproved Cards"} />
+              <ListItemText primary={"Time Cards"} />
             </ListItemButton>
           </ListItem>
         </List>

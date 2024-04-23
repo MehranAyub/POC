@@ -1,7 +1,7 @@
 import * as React from "react";
 import { styled } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import { AppTopbar } from "../Components/AppTopbar.tsx";
 import { AppLeftMenu } from "./AppLeftMenu.tsx";
 import HomePage from "../Pages/HomePage.tsx";
@@ -67,12 +67,9 @@ export const AuthLayout: React.FunctionComponent<AuthLayoutProps> = () => {
         <DrawerHeader />
         <Routes>
           <Route path={"/Home"} element={<HomePage />}></Route>
-          <Route path={"/ManageTimeCards"} element={<ClientTimeCard />}></Route>
-          <Route
-            path={"/UnapprovedTimeCards"}
-            element={<UnapprovedTimeCard />}
-          ></Route>
-          <Route path={"/"} element={<HomePage />}></Route>
+          <Route path={"/AddTimeCard"} element={<ClientTimeCard />}></Route>
+          <Route path={"/TimeCards"} element={<UnapprovedTimeCard />}></Route>
+          <Route path={"/"} element={<Navigate to={"/Home"}></Navigate>} />
         </Routes>
       </Main>
     </>

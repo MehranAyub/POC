@@ -15,6 +15,6 @@ namespace Core.Application.TimeSheets
         Task<PayloadCustom<Project>> GetProjects();
         void AddTimeSheet(TimeSheet timeSheet);
         Task<bool> DeleteTimeSheet(int id);
-
+        Task<bool> ApproveTimeSheet(int id);
     }
 }

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import {
   useGetTimeSheetsMutation,
   useDeleteTimesheetMutation,
+  useApproveTimesheetMutation,
 } from "../Redux/Reducer/Features/TimeSheet/TimeSheetSlice.tsx";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
@@ -11,12 +12,16 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { Timesheet } from "../Models/Timesheet.ts";
+import { TimeSheetInitialValues, Timesheet } from "../Models/Timesheet.ts";
 import {
   Box,
   Button,
   Chip,
   CircularProgress,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
   IconButton,
   Link,
   ListItemIcon,
@@ -32,7 +37,9 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import dayjs from "dayjs";
+import CloseIcon from "@mui/icons-material/Close";
+
+import { ViewClientTimeCard } from "./ViewClientTimeCard.tsx";
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
@@ -58,9 +65,14 @@ export const UnapprovedTimeCard: React.FunctionComponent = () => {
     useGetTimeSheetsMutation();
   const [deleteTimeSheetMutation, deleteTimeSheetMutationResult] =
     useDeleteTimesheetMutation();
+  const [approveTimeSheetMutation, approveTimeSheetMutationResult] =
+    useApproveTimesheetMutation();
   const [timeSheets, setTimeSheets] = useState<Timesheet[]>([]);
-  const [selectedRow, setSelectedRow] = React.useState<Timesheet>();
+  const [selectedRow, setSelectedRow] = React.useState<Timesheet>(
+    TimeSheetInitialValues
+  );
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [openView, setOpenView] = useState<boolean>(false);
   const open = Boolean(anchorEl);
   const [formData, setFormData] = useState({
     employeeName: "",
@@ -106,10 +118,10 @@ export const UnapprovedTimeCard: React.FunctionComponent = () => {
   ) => {
     setAnchorEl(event.currentTarget);
     setSelectedRow(item);
-    console.log("selected row", item);
   };
   const handleClose = (params: any) => {
     setAnchorEl(null);
+    setOpenView(false);
   };
   useEffect(() => {
     handleSearch();
@@ -124,6 +136,17 @@ export const UnapprovedTimeCard: React.FunctionComponent = () => {
       console.log("response of delete", res);
     });
   };
+
+  const handleApproveTimeSheet = () => {
+    handleClose(true);
+    setTimeSheets(
+      timeSheets.map((time) =>
+        time.id === selectedRow?.id ? { ...time, isApproved: true } : time
+      )
+    );
+    approveTimeSheetMutation({ id: selectedRow?.id ?? 0 }).then((res) => {});
+  };
+
   const ActionsButton = (params: Timesheet) => {
     return (
       <div>
@@ -149,7 +172,7 @@ export const UnapprovedTimeCard: React.FunctionComponent = () => {
         >
           <MenuItem
             onClick={() => {
-              //   handleGetProductDetail();
+              setOpenView(true);
             }}
           >
             <ListItemIcon>
@@ -165,9 +188,8 @@ export const UnapprovedTimeCard: React.FunctionComponent = () => {
           </MenuItem>
 
           <MenuItem
-            onClick={() => {
-              window.open(`/ProductDetailView/${selectedRow?.id}`);
-            }}
+            disabled={selectedRow.isApproved === true ? true : false}
+            onClick={handleApproveTimeSheet}
           >
             <ListItemIcon>
               <CheckBoxIcon />
@@ -298,13 +320,33 @@ export const UnapprovedTimeCard: React.FunctionComponent = () => {
               <StyledTableRow>
                 {" "}
                 <StyledTableCell colSpan={9} align="center">
-                  No rows to show
+                  {timeSheetMutationResult.isLoading
+                    ? "Fetching Data"
+                    : "No rows to show"}
                 </StyledTableCell>
               </StyledTableRow>
             )}
           </TableBody>
         </Table>
       </TableContainer>
+      <Dialog maxWidth="md" open={openView} onClose={handleClose}>
+        <DialogTitle
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          View TimeSheet
+          <IconButton onClick={handleClose}>
+            <CloseIcon />
+          </IconButton>
+        </DialogTitle>
+        <DialogContent>
+          <ViewClientTimeCard timeSheet={selectedRow} />;
+        </DialogContent>
+        <DialogActions></DialogActions>
+      </Dialog>
     </>
   );
 };

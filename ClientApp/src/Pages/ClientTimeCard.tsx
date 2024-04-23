@@ -9,6 +9,7 @@ import {
   Autocomplete,
   Box,
   Button,
+  CircularProgress,
   Container,
   FormControl,
   FormControlLabel,
@@ -54,7 +55,7 @@ export const ClientTimeCard: React.FunctionComponent = () => {
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
-      if (file.type !== "application/pdf" || file.size > 20971520) {
+      if (file.type !== "application/pdf" || file.size > 18874368) {
         setInvalidSize(true);
       } else {
         setInvalidSize(false);
@@ -399,7 +400,18 @@ export const ClientTimeCard: React.FunctionComponent = () => {
                   />
                 </Grid>
                 <Grid item sx={{ textAlign: "end" }} md={6}>
-                  <Button variant="contained" type="submit">
+                  <Button
+                    disabled={addTimeSheetMutationResult.isLoading}
+                    endIcon={
+                      addTimeSheetMutationResult.isLoading ? (
+                        <CircularProgress size="1rem"></CircularProgress>
+                      ) : (
+                        ""
+                      )
+                    }
+                    variant="contained"
+                    type="submit"
+                  >
                     Save & Upload
                   </Button>
                 </Grid>
