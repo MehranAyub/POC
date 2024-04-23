@@ -7,6 +7,7 @@ import { addToken } from "../Redux/Reducer/Features/Auth/AuthSlice.tsx";
 export interface User {
   id: number;
   name: string;
+  userId: String;
   email: string;
   role: Role;
 }

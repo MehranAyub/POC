@@ -17,6 +17,7 @@
     "@types/node": "^20.12.7",
     "@types/react": "^18.2.79",
     "@types/react-dom": "^18.2.25",
+    "date-fns": "^3.6.0",
     "dayjs": "^1.11.10",
     "formik": "^2.4.5",
     "react": "^18.2.0",

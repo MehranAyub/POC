@@ -20,10 +20,10 @@ namespace Velocity.Controllers
         {
             _repository = repositoryWrapper;
         }
-        [HttpGet("GetTimeSheets")]
-        public async Task<PayloadCustom<TimeSheet>> GetTimeSheets()
+        [HttpPost("GetTimeSheets")]
+        public async Task<PayloadCustom<TimeSheet>> GetTimeSheets([FromBody] GetTimeSheetsRequest request)
         {
-            return await _repository.TimeSheet.GetTimeSheets();
+            return await _repository.TimeSheet.GetTimeSheets(request);
         }
         [HttpGet("GetProjects")]
         public async Task<PayloadCustom<Project>> GetProjects()
@@ -62,6 +62,32 @@ namespace Velocity.Controllers
 
             }
         }
+        [HttpDelete("{id}")]
+        public async Task<PayloadCustom<TimeSheet>> DeleteTimeSheet(int id)
+        {
+            try
+            {
+               var result=await _repository.TimeSheet.DeleteTimeSheet(id);
+                if (result)
+                {
+                    _repository.Save();
+                    return new PayloadCustom<TimeSheet>
+                    {
+                        Status = (int)HttpStatusCode.OK,
+                        Message = "Deleted Successfully"
+                    };
+                }
+                return new PayloadCustom<TimeSheet>
+                {
+                    Status = (int)HttpStatusCode.NotFound,
+                    Message = "Entity Not Found"
+                };
 
+            }
+            catch (Exception ex)
+            {
+                return new PayloadCustom<TimeSheet> { Status = (int)HttpStatusCode.InternalServerError,Message="Found Exception"+ex.InnerException };
+            }
+        }
     }
 }

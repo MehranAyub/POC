@@ -33,7 +33,7 @@ import {
 } from "../Models/Timesheet.ts";
 import dayjs from "dayjs";
 
-function ClientTimeCard() {
+export const ClientTimeCard: React.FunctionComponent = () => {
   const { data, isLoading, refetch } = useGetEmployeesQuery();
   const { data: projectsData } = useGetProjectsQuery();
   const [formInitialValues, setFormInitialValues] = useState<Timesheet>(
@@ -429,6 +429,4 @@ function ClientTimeCard() {
       </Formik>
     </>
   );
-}
-
-export default ClientTimeCard;
+};

@@ -5,9 +5,11 @@ export const TimeSheetApi = createApi({
   reducerPath: "TimeSheetApi",
   baseQuery: axiosBaseQuery(),
   endpoints: (build) => ({
-    getTimeSheets: build.query<any, void>({
-      query: () => ({
+    getTimeSheets: build.mutation<any, { data: any }>({
+      query: ({ data }) => ({
         url: `api/TimeSheet/GetTimeSheets`,
+        method: "post",
+        data: data,
       }),
     }),
     getProjects: build.query<any, void>({
@@ -27,13 +29,21 @@ export const TimeSheetApi = createApi({
         data: data,
       }),
     }),
+    deleteTimesheet: build.mutation<any, { id: number }>({
+      query: ({ id }) => ({
+        url: `api/TimeSheet/` + id,
+        method: "delete",
+        data: null,
+      }),
+    }),
   }),
 });
 
 export const {
-  useGetTimeSheetsQuery,
+  useGetTimeSheetsMutation,
   useGetEmployeesQuery,
   useGetProjectsQuery,
   useAddTimesheetMutation,
+  useDeleteTimesheetMutation,
 } = TimeSheetApi;
 export const TimeSheetReducer = TimeSheetApi.reducer;

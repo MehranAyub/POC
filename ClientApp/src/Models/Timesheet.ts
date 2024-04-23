@@ -1,5 +1,12 @@
 import * as Yup from "yup";
+import { User } from "./User";
 
+export interface Project {
+  id?: number;
+  projectId: string;
+  name: string;
+  customerName: string;
+}
 export interface Timesheet {
   id?: number;
   userId: string;
@@ -9,6 +16,8 @@ export interface Timesheet {
   totalHours: number;
   isApproved: boolean;
   urls?: string[];
+  user?: User;
+  project?: Project;
 }
 export const TimeSheetInitialValues: Timesheet = {
   userId: "",

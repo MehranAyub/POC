@@ -124,38 +124,13 @@ export const AppLeftMenu: React.FunctionComponent<AppLeftMenuProps> = ({
           <ListItem disablePadding>
             <ListItemButton
               onClick={() => {
-                navigate("/Parts");
+                navigate("/UnapprovedTimeCards");
               }}
             >
               <ListItemIcon>
                 <SettingsIcon sx={{ color: "#ffff" }} />
               </ListItemIcon>
-              <ListItemText primary={"Parts"} />
-            </ListItemButton>
-          </ListItem>
-
-          <ListItem disablePadding>
-            <ListItemButton
-              onClick={() => {
-                navigate("/Categories");
-              }}
-            >
-              <ListItemIcon>
-                <CategoryIcon sx={{ color: "#ffff" }} />
-              </ListItemIcon>
-              <ListItemText primary={"Categories"} />
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding>
-            <ListItemButton
-              onClick={() => {
-                navigate("/Manufacturer");
-              }}
-            >
-              <ListItemIcon>
-                <PrecisionManufacturingIcon sx={{ color: "#ffff" }} />
-              </ListItemIcon>
-              <ListItemText primary={"Manufacturer"} />
+              <ListItemText primary={"Unapproved Cards"} />
             </ListItemButton>
           </ListItem>
         </List>

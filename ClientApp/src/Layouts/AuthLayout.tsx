@@ -8,6 +8,7 @@ import HomePage from "../Pages/HomePage.tsx";
 import ClientTimeCard from "../Pages/ClientTimeCard.tsx";
 import { useSelector } from "react-redux";
 import { AppState } from "../Redux/Reducer/rootReducer.tsx";
+import UnapprovedTimeCard from "../Pages/UnapprovedTimeCard.tsx";
 
 export interface AuthLayoutProps {}
 
@@ -69,6 +70,10 @@ export const AuthLayout: React.FunctionComponent<AuthLayoutProps> = () => {
         <Routes>
           <Route path={"/Home"} element={<HomePage />}></Route>
           <Route path={"/ManageTimeCards"} element={<ClientTimeCard />}></Route>
+          <Route
+            path={"/UnapprovedTimeCards"}
+            element={<UnapprovedTimeCard />}
+          ></Route>
         </Routes>
       </Main>
     </>

@@ -28,3 +28,4 @@ D:\Velocity\POC\Core.Application\obj\Debug\net6.0\Core.Application.dll
 D:\Velocity\POC\Core.Application\obj\Debug\net6.0\refint\Core.Application.dll
 D:\Velocity\POC\Core.Application\obj\Debug\net6.0\Core.Application.pdb
 D:\Velocity\POC\Core.Application\obj\Debug\net6.0\ref\Core.Application.dll
+D:\Velocity\POC\Core.Application\obj\Debug\net6.0\Core.Application.sourcelink.json
